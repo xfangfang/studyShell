@@ -15,29 +15,11 @@ function getInfo() {
   echo 余额 $item3 元
   echo 登陆地址 $item6
 }
-function phoneLogin() {
-  url="https://ipgw.neu.edu.cn/srun_portal_phone.php?url=&ac_id=1"
-  data="action=login&username="$1"&password="$2"&save_me=0"
-  res=$(curl -s ${url} -d ${data})
-  k=$RANDOM
-  urlInfo="https://ipgw.neu.edu.cn/include/auth_action.php?k="$k
-  dataInfo="action=get_online_info&key="$k
-  resInfo=$(curl -s ${urlInfo} -d ${dataInfo})
-  if [[ $resInfo = "not_online" ]]; then
-    echo $res | grep -q "E2531" && echo '帐号错误'
-    echo $res | grep -q "E2553" && echo '密码错误'
-    echo $res | grep -q "E2616" && echo '欠费'
-    echo $res | grep -q "E2606" && echo '未开通'
-    echo $res | grep -q "E2620" && echo '帐号异地正在登录'
-  else
-    echo '网络已连接'
-    # getInfo
-  fi
-}
+
 function login() {
   url="https://ipgw.neu.edu.cn/srun_portal_pc.php?url=&ac_id=1"
   data="action=login&username="$1"&password="$2"&save_me=0"
-  res=$(curl -s ${url} -d ${data})
+  res=$(curl -H "User-Agent:$3" -s ${url} -d ${data})
   if  echo $res | grep -q "网络已连接" ; then
    echo '网络已连接'
    getInfo
@@ -59,18 +41,20 @@ function logout() {
 
 if [[ $1 = "" ]]; then
   logout $username $password
-  login $username $password
+  login $username $password "MAC OS"
 elif [[ $1 = 1 ]]; then
-  login $username $password
+  login $username $password "MAC OS"
 elif [[ $1 = 2 ]]; then
   logout $username $password
 elif [[ $1 = 3 ]]; then
   logout $username $password
-  login $username $password
+  login $username $password "MAC OS"
 elif [[ $1 = 4 ]]; then
-  phoneLogin $username $password
+  login $username $password "Android"
 elif [[ $1 = 5 ]]; then
   getInfo
+else
+  echo 1电脑登陆,2全部退出,3电脑强制登陆,4手机登陆,5取上线信息,默认强制登陆
 fi
 
 
