@@ -25,18 +25,23 @@ function getInfo() {
 }
 
 function login() {
-  url="https://ipgw.neu.edu.cn/srun_portal_pc.php?url=&ac_id=1"
-  data="action=login&username="$1"&password="$2"&save_me=0"
-  res=$(curl -H "User-Agent:$3" -s ${url} -d ${data})
-  if  echo $res | grep -q "网络已连接" ; then
-   echo '网络已连接'
-   getInfo
- else
-    echo $res | grep -q "E2531" && echo '帐号错误'
-    echo $res | grep -q "E2553" && echo '密码错误'
-    echo $res | grep -q "E2616" && echo '欠费'
-    echo $res | grep -q "E2606" && echo '未开通'
-    echo $res | grep -q "E2620" && echo '帐号异地正在登录'
+  if [[ $username = "test" ]]; then
+      changePassword
+      echo 请重新登陆
+  else
+      url="https://ipgw.neu.edu.cn/srun_portal_pc.php?url=&ac_id=1"
+      data="action=login&username="$1"&password="$2"&save_me=0"
+      res=$(curl -H "User-Agent:$3" -s ${url} -d ${data})
+      if  echo $res | grep -q "网络已连接" ; then
+       echo '网络已连接'
+       getInfo
+     else
+        echo $res | grep -q "E2531" && echo '帐号错误'
+        echo $res | grep -q "E2553" && echo '密码错误'
+        echo $res | grep -q "E2616" && echo '欠费'
+        echo $res | grep -q "E2606" && echo '未开通'
+        echo $res | grep -q "E2620" && echo '帐号异地正在登录'
+      fi
   fi
 }
 
