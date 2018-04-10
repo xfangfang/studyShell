@@ -11,9 +11,9 @@
 
 在命令行里输入
 
-`curl https://raw.githubusercontent.com/xfangfang/studyShell/master/download_neu.sh| bash 你的学号 你的密码`
+`curl https://raw.githubusercontent.com/xfangfang/studyShell/master/download_neu.sh| bash`
 
-注：将命令行中的学号和密码替换为你自己的内容
+注：执行完毕后在命令行中输入 neu 即可联网
 
 
 ### Linux
