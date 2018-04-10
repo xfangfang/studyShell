@@ -4,11 +4,13 @@ username="test"
 password="test"
 
 function changePassword() {
-    basepath=$(cd `dirname $0`; pwd)/$0
     read -p "请输入账号" user
-    sed -i '' '3s/test/'$user'/' $basepath;
+    sed -i '' '3s/".*"/'\"$user\"'/' $0;
     read -p "请输入密码" pawd
-    sed -i '' '4s/test/'$pawd'/' $basepath;
+    #假设密码中没有 \"
+    sed -i '' '4s/".*"/'\"$pawd\"'/' $0;
+
+    echo 可以登陆了
 }
 
 function getInfo() {
