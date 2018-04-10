@@ -3,6 +3,14 @@
 username="test"
 password="test"
 
+function changePassword() {
+    basepath=$(cd `dirname $0`; pwd)/$0
+    read -p "请输入账号" user
+    sed -i '' '3s/test/'$user'/' $basepath;
+    read -p "请输入密码" pawd
+    sed -i '' '4s/test/'$pawd'/' $basepath;
+}
+
 function getInfo() {
   k=$RANDOM
   urlInfo="https://ipgw.neu.edu.cn/include/auth_action.php?k="$k
@@ -53,15 +61,18 @@ elif [[ $1 = 4 ]]; then
   login $username $password "Android"
 elif [[ $1 = 5 ]]; then
   getInfo
+elif [[ $1 = 6 ]]; then
+  changePassword
 else
-  echo 1电脑登陆,2全部退出,3电脑强制登陆,4手机登陆,5取上线信息,默认强制登陆
+  echo 1电脑登陆,2全部退出,3电脑强制登陆,4手机登陆,5取上线信息,6,修改账号密码,默认强制登陆
 fi
 
 
-# 使用
+# 使用方法
 # 默认强制登陆
-# 参数一为登陆
-# 参数二为退出
-# 参数三为强制登陆
-# 参数四为模拟手机登陆
-# 参数五取上线信息
+# 参数为 1 登陆
+# 参数为 2 退出
+# 参数为 3 强制登陆
+# 参数为 4 模拟手机登陆
+# 参数为 5 上线信息
+# 参数为 6 更改信息
