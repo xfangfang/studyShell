@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 username="test"
-password="test"
+password="toLocaleTimeString"
 
 function changePassword() {
     read -p "请输入账号" user
@@ -49,7 +49,13 @@ function login() {
 
 function logout() {
   url="https://ipgw.neu.edu.cn/include/auth_action.php"
-  data="action=logout&username=$1&password=$2&ajax=1"
+  data="action=logout&username=$1&ajax=1"
+  if [[ "$2" != "" ]]; then
+      echo "退出所有设备"
+      data=$data"&password=$2"
+  else
+      echo "退出当前设备"
+  fi
   res=$(curl -s ${url} -d ${data})
   echo ${res}
 }
@@ -62,8 +68,7 @@ elif [[ $1 = 1 ]]; then
 elif [[ $1 = 2 ]]; then
   logout $username $password
 elif [[ $1 = 3 ]]; then
-  logout $username $password
-  login $username $password "MAC OS"
+  logout $username
 elif [[ $1 = 4 ]]; then
   login $username $password "Android"
 elif [[ $1 = 5 ]]; then
@@ -71,15 +76,15 @@ elif [[ $1 = 5 ]]; then
 elif [[ $1 = 6 ]]; then
   changePassword
 else
-  echo 1电脑登陆,2全部退出,3电脑强制登陆,4手机登陆,5取上线信息,6,修改账号密码,默认强制登陆
+  echo 1电脑登陆,2全部退出,3当前退出,4手机登陆,5取上线信息,6,修改账号密码,默认先退出后登陆
 fi
 
 
 # 使用方法
 # 默认强制登陆
 # 参数为 1 登陆
-# 参数为 2 退出
-# 参数为 3 强制登陆
+# 参数为 2 退出所有
+# 参数为 3 退出当前
 # 参数为 4 模拟手机登陆
 # 参数为 5 上线信息
 # 参数为 6 更改信息
