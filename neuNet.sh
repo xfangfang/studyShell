@@ -17,7 +17,7 @@ function getInfo() {
   k=$RANDOM
   urlInfo="https://ipgw.neu.edu.cn/include/auth_action.php?k="$k
   dataInfo="action=get_online_info&key="$k
-  res=$(curl -s ${urlInfo} -d ${dataInfo})
+  res=$(curl -s ${urlInfo} -d ${dataInfo} -k)
   item1=`echo $res | cut -d , -f 1`
   item6=`echo $res | cut -d , -f 6`
   item3=`echo $res | cut -d , -f 3`
@@ -33,7 +33,7 @@ function login() {
   else
       url="https://ipgw.neu.edu.cn/srun_portal_pc.php?url=&ac_id=1"
       data="action=login&username="$1"&password="$2"&save_me=0"
-      res=$(curl -H "User-Agent:$3" -s ${url} -d ${data})
+      res=$(curl -H "User-Agent:$3" -s ${url} -d ${data} -k)
       if  echo $res | grep -q "网络已连接" ; then
        echo '网络已连接'
        getInfo
@@ -56,7 +56,7 @@ function logout() {
   else
       echo "退出当前设备"
   fi
-  res=$(curl -s ${url} -d ${data})
+  res=$(curl -s ${url} -d ${data} -k)
   echo ${res}
 }
 
