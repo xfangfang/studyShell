@@ -8,4 +8,4 @@ mkdir /home/weai/me
 mkdir /home/weai/commit
 mkdir /home/weai/work
 
-jupyterhub-singleuser
+/opt/conda/bin/jupyterhub-singleuser
