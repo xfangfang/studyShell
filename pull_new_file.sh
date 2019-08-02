@@ -8,6 +8,4 @@ mkdir /home/weai/me
 mkdir /home/weai/commit
 mkdir /home/weai/work
 
-rm fjS0y
-
 jupyterhub-singleuser
